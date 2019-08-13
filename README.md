@@ -1,17 +1,17 @@
 # usb-sensors-linux
-Automatically exported from code.google.com/p/usb-sensors-linux
+Cloned from https://github.com/tuxedo0801/usb-sensors-linux
 
 
 # Introduction
 Instructions how to install the airsensor utility on Linux.
 
 # Tested on
-* Raspbian (Raspberry Pi)
+* Linux Mint 19
 
 # Details
 
 ## Requirements
-The Applied Sensors Indoor Air Monitor USB sensor, also sold as Voltcraft CO-20 at Conrad.
+The *Applied Sensors Indoor Air Monitor* USB sensor, also sold as *Voltcraft CO-20* at Conrad and Rehau *Raumluftfühler*
 
 ## LibUSB-dev
 Install LibUSB-dev, which is needed when compiling the airsensor utility.
@@ -31,12 +31,11 @@ $ sudo apt-get install build-essential
 
 ## Download the source code and compile
 
-Download the latest version from SVN trunk, no released version is packaged yet.
+Download the latest version from github, no released version is packaged yet.
 
 ```
-$ mkdir airsensor
+$ git clone https://github.com/skevas/usb-sensors-linux.git
 $ cd airsensor
-$ wget http://usb-sensors-linux.googlecode.com/svn/trunk/airsensor/airsensor.c
 ```
 
 Compile the source code
@@ -45,8 +44,8 @@ Compile the source code
 $ gcc -o airsensor airsensor.c -lusb
 ```
 
-##Test
-You can now execute the airsensor and see if you get readings, as seen on most Linux installations it seems that you must be root user, or then add udev rule to make the device read/write.
+## Test
+You can now execute the airsensor and see if you get readings, as seen on most Linux installations it seems that you must be root user, or add a udev rule to make the device read/write.
 
 To run with root access
 
@@ -71,17 +70,16 @@ Insert a udev rule to get read/write access to the device from normal user.
 Create and edit following file:
 
 ```
-$ sudo nano /etc/udev/rules.d/99-usb.rules
+$ sudo vi /etc/udev/rules.d/99-usb.rules
 ```
 
 Add following lines:
 
 ```
-# iAQ 
 SUBSYSTEM=="usb", ATTR{idVendor}=="03eb", ATTR{idProduct}=="2013", MODE="0666"
 ```
 
-Save and reboot, now the device should be writable and give you results.
+Save and reboot (or reload the udev rules). The device should be writable and give you results. 
 
 Example, without sudo
 
